@@ -80,7 +80,23 @@
     "UNG": "Commodities",
     "DBC": "Commodities",
     "WGMI": "Information Technology",
-    "REMX": "Materials"
+    "REMX": "Materials",
+    "AZN.L": "Health Care",
+    "SHEL.L": "Energy",
+    "HSBA.L": "Financials",
+    "ULVR.L": "Consumer Staples",
+    "BP.L": "Energy",
+    "RIO.L": "Materials",
+    "GSK.L": "Health Care",
+    "LSEG.L": "Financials",
+    "REL.L": "Industrials",
+    "DGE.L": "Consumer Staples",
+    "LLOY.L": "Financials",
+    "BARC.L": "Financials",
+    "AAL.L": "Materials",
+    "VOD.L": "Communication Services",
+    "BA..L": "Industrials",
+    "NG..L": "Utilities"
   },
   "Industries_COLORS": {
     "SMH": "#3f51b5",
@@ -147,7 +163,23 @@
     "UNG": "#8b6914",
     "DBC": "#8b6914",
     "WGMI": "#3f51b5",
-    "REMX": "#ff9800"
+    "REMX": "#ff9800",
+    "AZN.L": "#e91e63",
+    "SHEL.L": "#795548",
+    "HSBA.L": "#ff5722",
+    "ULVR.L": "#8bc34a",
+    "BP.L": "#795548",
+    "RIO.L": "#ff9800",
+    "GSK.L": "#e91e63",
+    "LSEG.L": "#ff5722",
+    "REL.L": "#333",
+    "DGE.L": "#8bc34a",
+    "LLOY.L": "#ff5722",
+    "BARC.L": "#ff5722",
+    "AAL.L": "#ff9800",
+    "VOD.L": "#9c27b0",
+    "BA..L": "#333",
+    "NG..L": "#009688"
   },
   "SECTOR_ORDER": [
     "Information Technology",
@@ -165,5 +197,16 @@
     "Consumer Staples",
     "Broad Market"
   ],
-  "default_symbol": "QQQE"
+  "default_symbol": "QQQE",
+  "GROUP_BENCHMARK": {
+    "Indices": "SPY",
+    "S&P Style ETFs": "SPY",
+    "Sel Sectors": "SPY",
+    "EW Sectors": "SPY",
+    "Industries": "SPY",
+    "Countries": "SPY",
+    "UK Indices": "ISF.L",
+    "UK UCITS ETFs": "ISF.L",
+    "UK Large Caps": "ISF.L"
+  }
 }

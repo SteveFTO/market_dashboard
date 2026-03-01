@@ -2,51 +2,61 @@
   {
     "date": "02/03/2026",
     "time": "15:00",
-    "event": "ISM Manufacturing PMI  (Feb)"
+    "event": "ISM Manufacturing PMI  (Feb)",
+    "country": "US"
   },
   {
     "date": "02/03/2026",
     "time": "15:00",
-    "event": "ISM Manufacturing Prices  (Feb)"
+    "event": "ISM Manufacturing Prices  (Feb)",
+    "country": "US"
   },
   {
     "date": "04/03/2026",
     "time": "13:15",
-    "event": "ADP Nonfarm Employment Change  (Feb)"
+    "event": "ADP Nonfarm Employment Change  (Feb)",
+    "country": "US"
   },
   {
     "date": "04/03/2026",
     "time": "15:00",
-    "event": "ISM Non-Manufacturing PMI  (Feb)"
+    "event": "ISM Non-Manufacturing PMI  (Feb)",
+    "country": "US"
   },
   {
     "date": "04/03/2026",
     "time": "15:00",
-    "event": "ISM Non-Manufacturing Prices  (Feb)"
+    "event": "ISM Non-Manufacturing Prices  (Feb)",
+    "country": "US"
   },
   {
     "date": "05/03/2026",
     "time": "13:30",
-    "event": "Initial Jobless Claims"
+    "event": "Initial Jobless Claims",
+    "country": "US"
   },
   {
     "date": "06/03/2026",
     "time": "12:30",
-    "event": "Core Retail Sales (MoM)  (Jan)"
+    "event": "Core Retail Sales (MoM)  (Jan)",
+    "country": "US"
   },
   {
     "date": "06/03/2026",
     "time": "12:30",
-    "event": "Retail Sales (MoM)  (Jan)"
+    "event": "Retail Sales (MoM)  (Jan)",
+    "country": "US"
   },
   {
     "date": "06/03/2026",
     "time": "13:30",
-    "event": "Nonfarm Payrolls  (Feb)"
+    "event": "Nonfarm Payrolls  (Feb)",
+    "country": "US"
   },
   {
     "date": "06/03/2026",
     "time": "13:30",
-    "event": "Unemployment Rate  (Feb)"
+    "event": "Unemployment Rate  (Feb)",
+    "country": "US"
   }
 ]
