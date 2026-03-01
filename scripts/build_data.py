@@ -25,7 +25,9 @@ try:
 except ImportError:
     investpy = None
 
-# --- Config: no Liquid Stocks ---
+# ---------------------------------------------------------------------------
+# US economic event keywords
+# ---------------------------------------------------------------------------
 KEY_EVENTS = [
     "Fed", "Federal Reserve", "Interest Rate", "FOMC",
     "ISM Manufacturing", "ISM Non-Manufacturing", "ISM Services", "ISM",
@@ -37,6 +39,23 @@ KEY_EVENTS = [
     "Beige Book", "Fed Minutes", "JOLTS", "Job Openings"
 ]
 
+# ---------------------------------------------------------------------------
+# UK economic event keywords
+# ---------------------------------------------------------------------------
+UK_KEY_EVENTS = [
+    "Bank of England", "BoE", "Monetary Policy Committee", "MPC", "Base Rate",
+    "UK CPI", "UK GDP", "UK Retail Sales", "UK Unemployment",
+    "Claimant Count", "Average Earnings", "Wage Growth",
+    "UK Manufacturing PMI", "UK Services PMI", "UK Construction PMI", "UK PMI",
+    "UK Budget", "Autumn Statement", "Spring Statement",
+    "Nationwide", "Halifax House", "UK Trade Balance",
+    "UK Industrial Production", "UK House Price", "UK Inflation",
+    "UK Interest Rate"
+]
+
+# ---------------------------------------------------------------------------
+# US stock groups
+# ---------------------------------------------------------------------------
 STOCK_GROUPS = {
     "Indices": ["QQQE", "MGK", "QQQ", "IBIT", "RSP", "MDY", "IWM", "TLT", "SPY", "ETHA", "DIA"],
     "S&P Style ETFs": ["IJS", "IJR", "IJT", "IJJ", "IJH", "IJK", "IVE", "IVV", "IVW"],
@@ -52,6 +71,65 @@ STOCK_GROUPS = {
         "EZA", "ARGT", "EWA", "THD", "EIDO", "EWC", "GREK", "EWP", "EWG", "EWL", "EUFN", "EWY", "IEUR", "EFA", "ACWI",
         "IEV", "EWQ", "EWI", "EWJ", "EWW", "ECH", "EWD", "ASHR", "EWS", "KSA", "INDA", "EEM", "EWZ", "TUR", "EWH", "EWT", "MCHI"
     ]
+}
+
+# ---------------------------------------------------------------------------
+# UK stock groups  (all tickers use Yahoo Finance .L suffix for LSE)
+# ---------------------------------------------------------------------------
+UK_STOCK_GROUPS = {
+    "UK Indices": [
+        "ISF.L",   # iShares Core FTSE 100 UCITS ETF  (benchmark; most liquid)
+        "VUKE.L",  # Vanguard FTSE 100 UCITS ETF
+        "VMID.L",  # Vanguard FTSE 250 UCITS ETF
+        "MIDD.L",  # iShares FTSE 250 UCITS ETF
+        "VWRL.L",  # Vanguard FTSE All-World UCITS ETF
+        "VFEM.L",  # Vanguard FTSE Emerging Markets UCITS ETF
+    ],
+    "UK UCITS ETFs": [
+        "IWDA.L",  # iShares Core MSCI World UCITS ETF
+        "EQQQ.L",  # Invesco EQQQ NASDAQ-100 UCITS ETF  (≈ QQQ for UK investors)
+        "VUSA.L",  # Vanguard S&P 500 UCITS ETF
+        "CSPX.L",  # iShares Core S&P 500 UCITS ETF
+        "IITU.L",  # iShares S&P 500 IT Sector UCITS ETF
+        "IUHC.L",  # iShares S&P 500 Health Care Sector UCITS ETF
+        "IUKD.L",  # iShares UK Dividend UCITS ETF
+        "IUKP.L",  # iShares UK Property UCITS ETF
+        "INRG.L",  # iShares Global Clean Energy UCITS ETF
+        "SGLN.L",  # iShares Physical Gold ETC
+    ],
+    "UK Large Caps": [
+        "AZN.L",   # AstraZeneca         – Health Care
+        "SHEL.L",  # Shell               – Energy
+        "HSBA.L",  # HSBC Holdings       – Financials
+        "ULVR.L",  # Unilever            – Consumer Staples
+        "BP.L",    # BP                  – Energy
+        "RIO.L",   # Rio Tinto           – Materials
+        "GSK.L",   # GSK                 – Health Care
+        "LSEG.L",  # LSE Group           – Financials
+        "REL.L",   # RELX                – Industrials
+        "DGE.L",   # Diageo              – Consumer Staples
+        "LLOY.L",  # Lloyds Banking      – Financials
+        "BARC.L",  # Barclays            – Financials
+        "AAL.L",   # Anglo American      – Materials
+        "VOD.L",   # Vodafone            – Communication Services
+        "BA..L",   # BAE Systems         – Industrials  (Yahoo Finance uses double dot)
+        "NG..L",   # National Grid       – Utilities    (Yahoo Finance uses double dot)
+    ],
+}
+
+# ---------------------------------------------------------------------------
+# Per-group RS benchmark: UK groups compare vs ISF.L, US groups vs SPY
+# ---------------------------------------------------------------------------
+GROUP_BENCHMARK = {
+    "Indices":       "SPY",
+    "S&P Style ETFs":"SPY",
+    "Sel Sectors":   "SPY",
+    "EW Sectors":    "SPY",
+    "Industries":    "SPY",
+    "Countries":     "SPY",
+    "UK Indices":    "ISF.L",
+    "UK UCITS ETFs": "ISF.L",
+    "UK Large Caps": "ISF.L",
 }
 
 LEVERAGED_ETFS = {
@@ -130,10 +208,34 @@ Industries_COLORS = {
     "DBA": "#8b6914", "UNG": "#8b6914", "DBC": "#8b6914", "WGMI": "#3f51b5", "REMX": "#ff9800",
 }
 
+# Sector colour mapping for UK Large Caps (reuses SECTOR_COLORS palette)
+UK_LARGE_CAP_COLORS = {
+    "AZN.L":  "#e91e63",  # Health Care
+    "SHEL.L": "#795548",  # Energy
+    "HSBA.L": "#ff5722",  # Financials
+    "ULVR.L": "#8bc34a",  # Consumer Staples
+    "BP.L":   "#795548",  # Energy
+    "RIO.L":  "#ff9800",  # Materials
+    "GSK.L":  "#e91e63",  # Health Care
+    "LSEG.L": "#ff5722",  # Financials
+    "REL.L":  "#333",     # Industrials
+    "DGE.L":  "#8bc34a",  # Consumer Staples
+    "LLOY.L": "#ff5722",  # Financials
+    "BARC.L": "#ff5722",  # Financials
+    "AAL.L":  "#ff9800",  # Materials
+    "VOD.L":  "#9c27b0",  # Communication Services
+    "BA..L":  "#333",     # Industrials
+    "NG..L":  "#009688",  # Utilities
+}
+
 
 def get_ticker_to_sector_mapping():
     color_to_sector = {c: s for s, c in SECTOR_COLORS.items()}
-    return {t: color_to_sector.get(c, "Broad Market") for t, c in Industries_COLORS.items()}
+    mapping = {t: color_to_sector.get(c, "Broad Market") for t, c in Industries_COLORS.items()}
+    # Add UK large cap sector mappings using the same colour→sector lookup
+    for t, c in UK_LARGE_CAP_COLORS.items():
+        mapping[t] = color_to_sector.get(c, "Broad Market")
+    return mapping
 
 
 TICKER_TO_SECTOR = get_ticker_to_sector_mapping()
@@ -145,6 +247,10 @@ def get_leveraged_etfs(ticker):
     return [], []
 
 
+# ---------------------------------------------------------------------------
+# Economic calendar  (US + UK combined)
+# ---------------------------------------------------------------------------
+
 def get_upcoming_key_events(days_ahead=7):
     if investpy is None:
         return []
@@ -152,26 +258,57 @@ def get_upcoming_key_events(days_ahead=7):
     end_date = today + timedelta(days=days_ahead)
     from_date = today.strftime('%d/%m/%Y')
     to_date = end_date.strftime('%d/%m/%Y')
-    try:
-        calendar = investpy.news.economic_calendar(
-            time_zone=None, time_filter='time_only', countries=['united states'],
-            importances=['high'], categories=None, from_date=from_date, to_date=to_date
-        )
-        if calendar.empty:
-            return []
-        pattern = '|'.join(KEY_EVENTS)
-        filtered = calendar[
-            (calendar['event'].str.contains(pattern, case=False, na=False)) &
-            (calendar['importance'].str.lower() == 'high')
-        ]
-        if filtered.empty:
-            return []
-        filtered = filtered.sort_values(['date', 'time'])
-        return filtered[['date', 'time', 'event']].to_dict('records')
-    except Exception as e:
-        print("Economic calendar error:", e)
+
+    all_events = []
+    all_keywords = KEY_EVENTS + UK_KEY_EVENTS
+    pattern = '|'.join(all_keywords)
+
+    for country in ['united states', 'united kingdom']:
+        try:
+            calendar = investpy.news.economic_calendar(
+                time_zone=None, time_filter='time_only', countries=[country],
+                importances=['high'], categories=None, from_date=from_date, to_date=to_date
+            )
+            if calendar.empty:
+                continue
+            filtered = calendar[
+                (calendar['event'].str.contains(pattern, case=False, na=False)) &
+                (calendar['importance'].str.lower() == 'high')
+            ]
+            if filtered.empty:
+                continue
+            rows = filtered[['date', 'time', 'event']].copy()
+            rows['country'] = 'UK' if country == 'united kingdom' else 'US'
+            all_events.append(rows)
+        except Exception as e:
+            print(f"Economic calendar error ({country}):", e)
+
+    if not all_events:
         return []
 
+    combined = pd.concat(all_events, ignore_index=True)
+    combined = combined.sort_values(['date', 'time'])
+    return combined[['date', 'time', 'event', 'country']].to_dict('records')
+
+
+# ---------------------------------------------------------------------------
+# Benchmark history cache  (avoids re-downloading SPY/ISF.L for every ticker)
+# ---------------------------------------------------------------------------
+
+_benchmark_cache = {}
+
+
+def get_benchmark_history(benchmark, start_date, end_date):
+    key = (benchmark, start_date.date(), end_date.date())
+    if key not in _benchmark_cache:
+        print(f"  Fetching benchmark {benchmark}...")
+        _benchmark_cache[key] = yf.Ticker(benchmark).history(start=start_date, end=end_date)
+    return _benchmark_cache[key]
+
+
+# ---------------------------------------------------------------------------
+# Technical indicator helpers
+# ---------------------------------------------------------------------------
 
 def calculate_atr(hist_data, period=14):
     try:
@@ -184,10 +321,10 @@ def calculate_atr(hist_data, period=14):
         return None
 
 
-def calculate_rrs(stock_data, spy_data, atr_length=14, length_rolling=50, length_sma=20, atr_multiplier=1.0):
+def calculate_rrs(stock_data, benchmark_data, atr_length=14, length_rolling=50, length_sma=20, atr_multiplier=1.0):
     try:
         merged = pd.merge(
-            stock_data[['High', 'Low', 'Close']], spy_data[['High', 'Low', 'Close']],
+            stock_data[['High', 'Low', 'Close']], benchmark_data[['High', 'Low', 'Close']],
             left_index=True, right_index=True, suffixes=('_stock', '_spy'), how='inner'
         )
         if len(merged) < atr_length + 1:
@@ -275,7 +412,7 @@ def create_rs_chart_png(rrs_data, ticker, charts_dir):
         return None
 
 
-def get_stock_data(ticker_symbol, charts_dir):
+def get_stock_data(ticker_symbol, charts_dir, benchmark="SPY"):
     try:
         stock = yf.Ticker(ticker_symbol)
         hist = stock.history(period="21d")
@@ -301,9 +438,9 @@ def get_stock_data(ticker_symbol, charts_dir):
         start_date = end_date - timedelta(days=120)
         try:
             stock_history = stock.history(start=start_date, end=end_date)
-            spy_history = yf.Ticker("SPY").history(start=start_date, end=end_date)
-            if stock_history is not None and spy_history is not None:
-                rrs_data = calculate_rrs(stock_history, spy_history, atr_length=14, length_rolling=50, length_sma=20, atr_multiplier=1.0)
+            benchmark_history = get_benchmark_history(benchmark, start_date, end_date)
+            if stock_history is not None and benchmark_history is not None:
+                rrs_data = calculate_rrs(stock_history, benchmark_history, atr_length=14, length_rolling=50, length_sma=20, atr_multiplier=1.0)
                 if rrs_data is not None and len(rrs_data) >= 21:
                     recent_21 = rrs_data['rollingRRS'].iloc[-21:]
                     ranks = rankdata(recent_21, method='average')
@@ -341,20 +478,22 @@ def main():
     charts_dir = os.path.join(out_dir, "charts")
     os.makedirs(charts_dir, exist_ok=True)
 
-    print("Fetching economic events...")
+    print("Fetching economic events (US + UK)...")
     events = get_upcoming_key_events()
 
-    print("Fetching stock data (no Liquid Stocks)...")
+    # Merge US and UK groups into one ordered dict for processing
+    all_groups = {**STOCK_GROUPS, **UK_STOCK_GROUPS}
+
+    print("Fetching stock data...")
     groups_data = {}
-    all_ticker_data = {}
-    for group_name, tickers in STOCK_GROUPS.items():
+    for group_name, tickers in all_groups.items():
+        benchmark = GROUP_BENCHMARK.get(group_name, "SPY")
         rows = []
         for i, ticker in enumerate(tickers):
-            print(f"  [{group_name}] {i+1}/{len(tickers)} {ticker}")
-            row = get_stock_data(ticker, charts_dir)
+            print(f"  [{group_name}] {i+1}/{len(tickers)} {ticker}  (vs {benchmark})")
+            row = get_stock_data(ticker, charts_dir, benchmark=benchmark)
             if row:
                 rows.append(row)
-                all_ticker_data[ticker] = row
             time.sleep(0.15)
         groups_data[group_name] = rows
 
@@ -377,12 +516,17 @@ def main():
         "groups": groups_data,
         "column_ranges": column_ranges,
     }
+
+    # Merge Industries_COLORS and UK_LARGE_CAP_COLORS for frontend colour lookup
+    combined_colors = {**Industries_COLORS, **UK_LARGE_CAP_COLORS}
+
     meta = {
         "SECTOR_COLORS": SECTOR_COLORS,
         "TICKER_TO_SECTOR": TICKER_TO_SECTOR,
-        "Industries_COLORS": Industries_COLORS,
+        "Industries_COLORS": combined_colors,
         "SECTOR_ORDER": list(SECTOR_COLORS.keys()),
         "default_symbol": STOCK_GROUPS["Indices"][0] if STOCK_GROUPS["Indices"] else "SPY",
+        "GROUP_BENCHMARK": GROUP_BENCHMARK,
     }
 
     snapshot_path = os.path.join(out_dir, "snapshot.json")
