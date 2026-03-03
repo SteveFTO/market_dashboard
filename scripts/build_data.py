@@ -571,6 +571,99 @@ def get_stock_data(ticker_symbol, charts_dir, benchmark="SPY"):
         return None
 
 
+def save_uk_ohlcv_json(out_dir):
+    """Save 2-year OHLCV + EMA/SMA data for all pre-defined UK stocks (for Lightweight Charts)."""
+    ohlcv_dir = os.path.join(out_dir, "charts", "ohlcv")
+    os.makedirs(ohlcv_dir, exist_ok=True)
+    all_uk_tickers = [t for g in UK_STOCK_GROUPS.values() for t in g]
+    end_date = datetime.now()
+    start_date = end_date - timedelta(days=730)
+    print(f"  Saving OHLCV for {len(all_uk_tickers)} UK stocks...")
+    for ticker in all_uk_tickers:
+        try:
+            hist = yf.Ticker(ticker).history(start=start_date, end=end_date)
+            if len(hist) < 20:
+                print(f"  Skipping {ticker}: insufficient data"); continue
+            c = hist['Close']
+            ema8   = c.ewm(span=8,   adjust=False).mean()
+            ema21  = c.ewm(span=21,  adjust=False).mean()
+            sma50  = c.rolling(50).mean()
+            sma150 = c.rolling(150).mean()
+            sma200 = c.rolling(200).mean()
+            def s2l(series):
+                return [{"time": dt.strftime('%Y-%m-%d'), "value": round(float(v), 2)}
+                        for dt, v in series.items() if not pd.isna(v)]
+            ohlcv = []
+            for dt, row in hist.iterrows():
+                try:
+                    ohlcv.append({"time": dt.strftime('%Y-%m-%d'),
+                                  "open":   round(float(row['Open']),  2),
+                                  "high":   round(float(row['High']),  2),
+                                  "low":    round(float(row['Low']),   2),
+                                  "close":  round(float(row['Close']), 2),
+                                  "volume": int(row['Volume'])})
+                except Exception:
+                    continue
+            safe = re.sub(r'[^a-zA-Z0-9]', '_', ticker)
+            data = {"ticker": ticker, "ohlcv": ohlcv,
+                    "ema8": s2l(ema8), "ema21": s2l(ema21),
+                    "sma50": s2l(sma50), "sma150": s2l(sma150), "sma200": s2l(sma200)}
+            path = os.path.join(ohlcv_dir, f"{safe}.json")
+            with open(path, "w", encoding="utf-8") as f:
+                json.dump(data, f, ensure_ascii=False)
+            print(f"  Saved OHLCV {ticker} ({len(ohlcv)} days)")
+            time.sleep(0.1)
+        except Exception as e:
+            print(f"  OHLCV error {ticker}: {e}")
+
+
+def build_uk_screener(out_dir):
+    """Query TradingView Screener for UK stocks, compute derived metrics, save JSON."""
+    try:
+        from tradingview_screener import Query, Column
+    except ImportError:
+        print("tradingview-screener not installed – skipping UK screener"); return
+    import math
+    print("Building UK screener data...")
+    fields = ['name', 'close', 'change', 'volume', 'market_cap_basic',
+              'RSI', 'EMA8', 'EMA21', 'SMA50', 'SMA150', 'SMA200',
+              'ATR', 'sector', 'industry']
+    try:
+        count, df = (Query()
+                     .select(*fields)
+                     .set_markets('uk')
+                     .where(Column('market_cap_basic') > 50_000_000,
+                            Column('volume') > 50_000)
+                     .order_by('market_cap_basic', ascending=False)
+                     .limit(500)
+                     .get_scanner_data())
+        if 'change' in df.columns:
+            df = df.rename(columns={'change': 'change_pct'})
+        for ma in ['EMA8', 'EMA21', 'SMA50', 'SMA150', 'SMA200']:
+            if ma in df.columns:
+                df[f'vs_{ma}'] = ((df['close'] - df[ma]) / df[ma] * 100).round(2)
+        if 'ATR' in df.columns:
+            df['ATR_pct'] = (df['ATR'] / df['close'] * 100).round(2)
+        for col in ['close', 'RSI', 'EMA8', 'EMA21', 'SMA50', 'SMA150', 'SMA200', 'ATR', 'change_pct']:
+            if col in df.columns:
+                df[col] = df[col].round(2)
+        if 'ticker' in df.columns:
+            df = df.rename(columns={'ticker': 'tv_symbol'})
+        stocks = df.to_dict('records')
+        for stock in stocks:
+            for k, v in list(stock.items()):
+                if isinstance(v, float) and math.isnan(v):
+                    stock[k] = None
+        screener = {"built_at": datetime.utcnow().isoformat() + "Z",
+                    "total": count, "stocks": stocks}
+        path = os.path.join(out_dir, "uk_screener.json")
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(screener, f, ensure_ascii=False, indent=2)
+        print(f"Wrote {path} ({len(stocks)} of {count} stocks)")
+    except Exception as e:
+        print(f"UK screener error: {e}")
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--out-dir", default="data", help="Output directory (default: data)")
@@ -643,6 +736,11 @@ def main():
         json.dump(meta, f, ensure_ascii=False, indent=2)
 
     print("Wrote", snapshot_path, events_path, meta_path, "and charts in", charts_dir)
+
+    print("Saving UK OHLCV for Lightweight Charts...")
+    save_uk_ohlcv_json(out_dir)
+    print("Building UK screener...")
+    build_uk_screener(out_dir)
 
 
 if __name__ == "__main__":
