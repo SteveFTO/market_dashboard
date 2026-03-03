@@ -228,6 +228,107 @@ UK_LARGE_CAP_COLORS = {
     "NG..L":  "#009688",  # Utilities
 }
 
+# ---------------------------------------------------------------------------
+# Human-readable names for all tracked tickers
+# ---------------------------------------------------------------------------
+TICKER_NAMES = {
+    # US Indices
+    "QQQE": "Nasdaq-100 Equal Weight", "MGK": "Vanguard Mega Cap Growth",
+    "QQQ": "Nasdaq-100", "IBIT": "iShares Bitcoin Trust",
+    "RSP": "S&P 500 Equal Weight", "MDY": "S&P MidCap 400",
+    "IWM": "Russell 2000", "TLT": "20+ Year Treasury Bond",
+    "SPY": "S&P 500", "ETHA": "iShares Ethereum Trust",
+    "DIA": "Dow Jones Industrial Avg",
+    # S&P Style ETFs
+    "IJS": "S&P 600 Small Cap Value", "IJR": "S&P 600 Small Cap Core",
+    "IJT": "S&P 600 Small Cap Growth", "IJJ": "S&P 400 Mid Cap Value",
+    "IJH": "S&P 400 Mid Cap Core", "IJK": "S&P 400 Mid Cap Growth",
+    "IVE": "S&P 500 Value", "IVV": "S&P 500 Core", "IVW": "S&P 500 Growth",
+    # Select Sectors (SPDR XL)
+    "XLK": "Technology", "XLI": "Industrials",
+    "XLC": "Communication Services", "XLF": "Financials",
+    "XLU": "Utilities", "XLY": "Consumer Discretionary",
+    "XLRE": "Real Estate", "XLP": "Consumer Staples",
+    "XLB": "Materials", "XLE": "Energy", "XLV": "Health Care",
+    # Equal Weight Sectors (Invesco RSP)
+    "RSPT": "EW Technology", "RSPC": "EW Communication Svcs",
+    "RSPN": "EW Industrials", "RSPF": "EW Financials",
+    "RSPD": "EW Consumer Disc", "RSPU": "EW Utilities",
+    "RSPR": "EW Real Estate", "RSPH": "EW Health Care",
+    "RSPM": "EW Materials", "RSPS": "EW Consumer Staples",
+    "RSPG": "EW Energy",
+    # Industries
+    "TAN": "Solar Energy", "KCE": "Capital Markets",
+    "IBUY": "Online Retail", "JETS": "Airlines",
+    "IBB": "Biotech", "SMH": "Semiconductors",
+    "CIBR": "Cybersecurity", "UTES": "Utilities Dividend",
+    "ROBO": "Robotics & AI", "IGV": "Software",
+    "WCLD": "Cloud Computing", "ITA": "Aerospace & Defense",
+    "PAVE": "Infrastructure", "BLOK": "Blockchain",
+    "AIQ": "Artificial Intelligence", "IYZ": "Telecom",
+    "PEJ": "Leisure & Entertainment", "FDN": "Internet",
+    "KBE": "Banking", "UNG": "Natural Gas",
+    "BOAT": "Marine Shipping", "KWEB": "China Internet",
+    "KRE": "Regional Banks", "XRT": "Retail",
+    "IHI": "Medical Devices", "DRIV": "EV & Autonomous Vehicles",
+    "MSOS": "Cannabis", "SOCL": "Social Media",
+    "ARKF": "ARK Fintech", "SLX": "Steel",
+    "ARKK": "ARK Innovation", "XTN": "Transportation",
+    "XME": "Metals & Mining", "KIE": "Insurance",
+    "GLD": "Gold", "GXC": "China Broad Market",
+    "SCHH": "REITs", "GDX": "Gold Miners",
+    "IPAY": "Digital Payments", "XOP": "Oil & Gas E&P",
+    "VNQ": "Real Estate (REIT)", "EATZ": "Restaurants",
+    "FXI": "China Large Cap", "DBA": "Agriculture",
+    "ICLN": "Clean Energy", "SILJ": "Silver Miners",
+    "REZ": "Residential REIT", "LIT": "Lithium & Battery Tech",
+    "SLV": "Silver", "XHB": "Homebuilders",
+    "XHE": "Health Care Equipment", "PBJ": "Food & Beverage",
+    "USO": "Oil", "DBC": "Commodities",
+    "FCG": "Natural Gas Producers", "XBI": "Biotech",
+    "ARKG": "ARK Genomic Revolution", "CPER": "Copper",
+    "XES": "Oil & Gas Equipment", "OIH": "Oil Services",
+    "PPH": "Pharma", "FNGS": "Tech Giants",
+    "URA": "Uranium", "WGMI": "Bitcoin Mining",
+    "REMX": "Rare Earth Metals",
+    # Countries
+    "EZA": "South Africa", "ARGT": "Argentina",
+    "EWA": "Australia", "THD": "Thailand",
+    "EIDO": "Indonesia", "EWC": "Canada",
+    "GREK": "Greece", "EWP": "Spain",
+    "EWG": "Germany", "EWL": "Switzerland",
+    "EUFN": "European Financials", "EWY": "South Korea",
+    "IEUR": "Europe", "EFA": "Developed Markets ex-US",
+    "ACWI": "All Country World", "IEV": "Europe ETF",
+    "EWQ": "France", "EWI": "Italy",
+    "EWJ": "Japan", "EWW": "Mexico",
+    "ECH": "Chile", "EWD": "Sweden",
+    "ASHR": "China A-Shares", "EWS": "Singapore",
+    "KSA": "Saudi Arabia", "INDA": "India",
+    "EEM": "Emerging Markets", "EWZ": "Brazil",
+    "TUR": "Turkey", "EWH": "Hong Kong",
+    "EWT": "Taiwan", "MCHI": "China",
+    # UK Indices
+    "ISF.L": "FTSE 100 (iShares)", "VUKE.L": "FTSE 100 (Vanguard)",
+    "VMID.L": "FTSE 250 (Vanguard)", "MIDD.L": "FTSE 250 (iShares)",
+    "VWRL.L": "FTSE All-World", "VFEM.L": "FTSE Emerging Markets",
+    # UK UCITS ETFs
+    "IWDA.L": "MSCI World", "EQQQ.L": "Nasdaq-100 UCITS",
+    "VUSA.L": "S&P 500 (Vanguard)", "CSPX.L": "S&P 500 (iShares)",
+    "IITU.L": "S&P 500 IT Sector", "IUHC.L": "S&P 500 Health Care",
+    "IUKD.L": "UK Dividend", "IUKP.L": "UK Property REIT",
+    "INRG.L": "Global Clean Energy", "SGLN.L": "Physical Gold ETC",
+    # UK Large Caps
+    "AZN.L": "AstraZeneca", "SHEL.L": "Shell",
+    "HSBA.L": "HSBC Holdings", "ULVR.L": "Unilever",
+    "BP.L": "BP", "RIO.L": "Rio Tinto",
+    "GSK.L": "GSK", "LSEG.L": "London Stock Exch Group",
+    "REL.L": "RELX", "DGE.L": "Diageo",
+    "LLOY.L": "Lloyds Banking Group", "BARC.L": "Barclays",
+    "AAL.L": "Anglo American", "VOD.L": "Vodafone",
+    "BA..L": "BAE Systems", "NG..L": "National Grid",
+}
+
 
 def get_ticker_to_sector_mapping():
     color_to_sector = {c: s for s, c in SECTOR_COLORS.items()}
@@ -527,6 +628,7 @@ def main():
         "SECTOR_ORDER": list(SECTOR_COLORS.keys()),
         "default_symbol": STOCK_GROUPS["Indices"][0] if STOCK_GROUPS["Indices"] else "SPY",
         "GROUP_BENCHMARK": GROUP_BENCHMARK,
+        "TICKER_NAMES": TICKER_NAMES,
     }
 
     snapshot_path = os.path.join(out_dir, "snapshot.json")

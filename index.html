@@ -21,6 +21,8 @@
         .legend { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
         .legend-item { padding: 2px 6px; border-radius: 6px; font-size: 0.75em; color: white; user-select: none; }
         .ticker-table { width: 100%; border-collapse: collapse; font-size: 0.85em; table-layout: fixed; }
+        .ticker-table th:nth-child(1), .ticker-table td:nth-child(1) { width: 155px; overflow: hidden; }
+        .ticker-name { font-size: 0.72em; color: #94a3b8; display: block; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .ticker-table th:nth-child(3), .ticker-table td:nth-child(3) { width: 59px; padding: 6px 4px; overflow: hidden; }
         .ticker-table th:nth-child(4), .ticker-table td:nth-child(4) { width: 59px; padding: 6px 4px; overflow: hidden; }
         .ticker-table th:nth-child(5), .ticker-table td:nth-child(5) { width: 59px; padding: 6px 4px; overflow: hidden; }
@@ -144,6 +146,72 @@
     <script src="https://s3.tradingview.com/tv.js"></script>
     <script>
 (function() {
+    const TICKER_NAMES = {
+        "QQQE":"Nasdaq-100 Equal Weight","MGK":"Vanguard Mega Cap Growth",
+        "QQQ":"Nasdaq-100","IBIT":"iShares Bitcoin Trust",
+        "RSP":"S&P 500 Equal Weight","MDY":"S&P MidCap 400",
+        "IWM":"Russell 2000","TLT":"20+ Year Treasury Bond",
+        "SPY":"S&P 500","ETHA":"iShares Ethereum Trust","DIA":"Dow Jones Industrial Avg",
+        "IJS":"S&P 600 Small Cap Value","IJR":"S&P 600 Small Cap Core",
+        "IJT":"S&P 600 Small Cap Growth","IJJ":"S&P 400 Mid Cap Value",
+        "IJH":"S&P 400 Mid Cap Core","IJK":"S&P 400 Mid Cap Growth",
+        "IVE":"S&P 500 Value","IVV":"S&P 500 Core","IVW":"S&P 500 Growth",
+        "XLK":"Technology","XLI":"Industrials","XLC":"Communication Services",
+        "XLF":"Financials","XLU":"Utilities","XLY":"Consumer Discretionary",
+        "XLRE":"Real Estate","XLP":"Consumer Staples","XLB":"Materials",
+        "XLE":"Energy","XLV":"Health Care",
+        "RSPT":"EW Technology","RSPC":"EW Communication Svcs",
+        "RSPN":"EW Industrials","RSPF":"EW Financials",
+        "RSPD":"EW Consumer Disc","RSPU":"EW Utilities",
+        "RSPR":"EW Real Estate","RSPH":"EW Health Care",
+        "RSPM":"EW Materials","RSPS":"EW Consumer Staples","RSPG":"EW Energy",
+        "TAN":"Solar Energy","KCE":"Capital Markets","IBUY":"Online Retail",
+        "JETS":"Airlines","IBB":"Biotech","SMH":"Semiconductors",
+        "CIBR":"Cybersecurity","UTES":"Utilities Dividend","ROBO":"Robotics & AI",
+        "IGV":"Software","WCLD":"Cloud Computing","ITA":"Aerospace & Defense",
+        "PAVE":"Infrastructure","BLOK":"Blockchain","AIQ":"Artificial Intelligence",
+        "IYZ":"Telecom","PEJ":"Leisure & Entertainment","FDN":"Internet",
+        "KBE":"Banking","UNG":"Natural Gas","BOAT":"Marine Shipping",
+        "KWEB":"China Internet","KRE":"Regional Banks","XRT":"Retail",
+        "IHI":"Medical Devices","DRIV":"EV & Autonomous Vehicles",
+        "MSOS":"Cannabis","SOCL":"Social Media","ARKF":"ARK Fintech",
+        "SLX":"Steel","ARKK":"ARK Innovation","XTN":"Transportation",
+        "XME":"Metals & Mining","KIE":"Insurance","GLD":"Gold",
+        "GXC":"China Broad Market","SCHH":"REITs","GDX":"Gold Miners",
+        "IPAY":"Digital Payments","XOP":"Oil & Gas E&P","VNQ":"Real Estate (REIT)",
+        "EATZ":"Restaurants","FXI":"China Large Cap","DBA":"Agriculture",
+        "ICLN":"Clean Energy","SILJ":"Silver Miners","REZ":"Residential REIT",
+        "LIT":"Lithium & Battery Tech","SLV":"Silver","XHB":"Homebuilders",
+        "XHE":"Health Care Equipment","PBJ":"Food & Beverage","USO":"Oil",
+        "DBC":"Commodities","FCG":"Natural Gas Producers","XBI":"Biotech",
+        "ARKG":"ARK Genomic Revolution","CPER":"Copper",
+        "XES":"Oil & Gas Equipment","OIH":"Oil Services","PPH":"Pharma",
+        "FNGS":"Tech Giants","URA":"Uranium","WGMI":"Bitcoin Mining","REMX":"Rare Earth Metals",
+        "EZA":"South Africa","ARGT":"Argentina","EWA":"Australia","THD":"Thailand",
+        "EIDO":"Indonesia","EWC":"Canada","GREK":"Greece","EWP":"Spain",
+        "EWG":"Germany","EWL":"Switzerland","EUFN":"European Financials",
+        "EWY":"South Korea","IEUR":"Europe","EFA":"Developed Markets ex-US",
+        "ACWI":"All Country World","IEV":"Europe ETF","EWQ":"France",
+        "EWI":"Italy","EWJ":"Japan","EWW":"Mexico","ECH":"Chile","EWD":"Sweden",
+        "ASHR":"China A-Shares","EWS":"Singapore","KSA":"Saudi Arabia",
+        "INDA":"India","EEM":"Emerging Markets","EWZ":"Brazil","TUR":"Turkey",
+        "EWH":"Hong Kong","EWT":"Taiwan","MCHI":"China",
+        "ISF.L":"FTSE 100 (iShares)","VUKE.L":"FTSE 100 (Vanguard)",
+        "VMID.L":"FTSE 250 (Vanguard)","MIDD.L":"FTSE 250 (iShares)",
+        "VWRL.L":"FTSE All-World","VFEM.L":"FTSE Emerging Markets",
+        "IWDA.L":"MSCI World","EQQQ.L":"Nasdaq-100 UCITS",
+        "VUSA.L":"S&P 500 (Vanguard)","CSPX.L":"S&P 500 (iShares)",
+        "IITU.L":"S&P 500 IT Sector","IUHC.L":"S&P 500 Health Care",
+        "IUKD.L":"UK Dividend","IUKP.L":"UK Property REIT",
+        "INRG.L":"Global Clean Energy","SGLN.L":"Physical Gold ETC",
+        "AZN.L":"AstraZeneca","SHEL.L":"Shell","HSBA.L":"HSBC Holdings",
+        "ULVR.L":"Unilever","BP.L":"BP","RIO.L":"Rio Tinto","GSK.L":"GSK",
+        "LSEG.L":"London Stock Exch Group","REL.L":"RELX","DGE.L":"Diageo",
+        "LLOY.L":"Lloyds Banking Group","BARC.L":"Barclays",
+        "AAL.L":"Anglo American","VOD.L":"Vodafone",
+        "BA..L":"BAE Systems","NG..L":"National Grid"
+    };
+
     let chartWidget = null;
     let currentIndex = 0;
     let allTickerRows = [];
@@ -243,7 +311,8 @@
                 var dist = r.dist_sma50_atr != null ? r.dist_sma50_atr : 0;
                 var labelClass = getGroupLabelClass(groupName, r.ticker);
                 html += '<tr class="ticker-row" onclick="updateChart(\'' + r.ticker + '\', this)" data-symbol="' + r.ticker + '" data-group="' + groupName.replace(/"/g, '&quot;') + '" data-daily="' + (daily != null ? daily : 0) + '" data-intra="' + (intra != null ? intra : 0) + '" data-5d="' + (five != null ? five : 0) + '" data-20d="' + (twenty != null ? twenty : 0) + '" data-atr_pct="' + atrPct + '" data-dist_sma50_atr="' + dist + '" data-rs="' + rs + '" data-abc="' + abc + '" data-letf="' + letf + '" data-index="' + i + '">';
-                html += '<td><span class="ticker-label ' + labelClass + '">' + r.ticker + '</span></td>';
+                var tickerName = (meta && meta.TICKER_NAMES && meta.TICKER_NAMES[r.ticker]) || TICKER_NAMES[r.ticker] || '';
+                html += '<td><span class="ticker-label ' + labelClass + '">' + r.ticker + '</span>' + (tickerName ? '<span class="ticker-name">' + escapeHtml(tickerName) + '</span>' : '') + '</td>';
                 html += '<td>' + (abc ? '<span class="abc-rating abc-' + abc.toLowerCase() + '">' + abc + '</span>' : '-') + '</td>';
                 html += '<td class="' + dailyCl + '">' + (daily != null ? '<div class="value-visualization"><div class="value-bar ' + (daily >= 0 ? 'positive' : 'negative') + '" style="width:' + dailyW + '%"></div><span class="value-text">' + (daily >= 0 ? '+' : '') + daily.toFixed(2) + '%</span></div>' : 'N/A') + '</td>';
                 html += '<td class="' + intraCl + '">' + (intra != null ? '<div class="value-visualization"><div class="value-bar ' + (intra >= 0 ? 'positive' : 'negative') + '" style="width:' + intraW + '%"></div><span class="value-text">' + (intra >= 0 ? '+' : '') + intra.toFixed(2) + '%</span></div>' : 'N/A') + '</td>';
