@@ -627,7 +627,11 @@ def build_uk_screener(out_dir):
     print("Building UK screener data...")
     fields = ['name', 'close', 'change', 'volume', 'market_cap_basic',
               'RSI', 'EMA8', 'EMA21', 'SMA50', 'SMA150', 'SMA200',
-              'ATR', 'sector', 'industry']
+              'ATR', 'sector', 'industry',
+              'price_52_week_high', 'price_52_week_low',
+              'Perf.1M', 'Perf.3M', 'Perf.6M', 'Perf.YTD',
+              'Perf.1Y', 'Perf.3Y', 'Perf.5Y', 'Perf.10Y',
+              'relative_volume_10d_calc']
     try:
         count, df = (Query()
                      .select(*fields)
@@ -644,7 +648,19 @@ def build_uk_screener(out_dir):
                 df[f'vs_{ma}'] = ((df['close'] - df[ma]) / df[ma] * 100).round(2)
         if 'ATR' in df.columns:
             df['ATR_pct'] = (df['ATR'] / df['close'] * 100).round(2)
-        for col in ['close', 'RSI', 'EMA8', 'EMA21', 'SMA50', 'SMA150', 'SMA200', 'ATR', 'change_pct']:
+        if 'price_52_week_high' in df.columns:
+            df['vs_52wk_high'] = ((df['close'] - df['price_52_week_high']) / df['price_52_week_high'] * 100).round(2)
+        # Rename dotted/long field names to clean JSON keys
+        df = df.rename(columns={k: v for k, v in {
+            'Perf.1M': 'perf_1m', 'Perf.3M': 'perf_3m', 'Perf.6M': 'perf_6m',
+            'Perf.YTD': 'perf_ytd', 'Perf.1Y': 'perf_1y', 'Perf.3Y': 'perf_3y',
+            'Perf.5Y': 'perf_5y', 'Perf.10Y': 'perf_10y',
+            'relative_volume_10d_calc': 'rel_vol',
+        }.items() if k in df.columns})
+        for col in ['close', 'RSI', 'EMA8', 'EMA21', 'SMA50', 'SMA150', 'SMA200', 'ATR', 'change_pct',
+                    'price_52_week_high', 'price_52_week_low', 'rel_vol',
+                    'perf_1m', 'perf_3m', 'perf_6m', 'perf_ytd',
+                    'perf_1y', 'perf_3y', 'perf_5y', 'perf_10y']:
             if col in df.columns:
                 df[col] = df[col].round(2)
         if 'ticker' in df.columns:

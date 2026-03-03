@@ -187,6 +187,7 @@
                     <div class="scr-fi"><label>Market Cap</label><select id="scr-mcap"><option value="all">All</option><option value="large">Large (£1B+)</option><option value="mid">Mid (£300M–1B)</option><option value="small">Small (&lt;£300M)</option></select></div>
                     <div class="scr-fi"><label>Sector</label><select id="scr-sector"><option value="all">All</option></select></div>
                     <div class="scr-fi"><label>Min Volume</label><input type="number" id="scr-vol-min" placeholder="e.g. 500000" min="0"></div>
+                    <div class="scr-fi"><label>Rel Vol ≥ (vs 10d avg)</label><input type="number" id="scr-rel-vol" placeholder="e.g. 1.5" min="0" step="0.1"></div>
                 </div>
                 <div class="scr-ma-row">
                     <label>Price vs MA:</label>
@@ -661,6 +662,7 @@
         var mcap     = document.getElementById('scr-mcap').value;
         var sector   = document.getElementById('scr-sector').value;
         var volMin   = parseFloat(document.getElementById('scr-vol-min').value);
+        var relVolMin = parseFloat(document.getElementById('scr-rel-vol').value);
         var maField  = document.getElementById('scr-ma-field').value;
         var maCond   = document.getElementById('scr-ma-cond').value;
         var maPct    = parseFloat(document.getElementById('scr-ma-pct').value);
@@ -671,7 +673,8 @@
             if (!isNaN(atrMax) && s.ATR_pct != null && s.ATR_pct > atrMax) return false;
             if (!isNaN(dailyMin) && s.change_pct != null && s.change_pct < dailyMin) return false;
             if (!isNaN(dailyMax) && s.change_pct != null && s.change_pct > dailyMax) return false;
-            if (!isNaN(volMin)  && s.volume != null && s.volume < volMin) return false;
+            if (!isNaN(volMin)   && s.volume  != null && s.volume  < volMin)   return false;
+            if (!isNaN(relVolMin) && s.rel_vol != null && s.rel_vol < relVolMin) return false;
             if (sector !== 'all' && s.sector !== sector) return false;
             if (mcap !== 'all') {
                 var mc = s.market_cap_basic; if (mc == null) return false;
@@ -696,7 +699,7 @@
     };
 
     window.resetScreener = function() {
-        ['scr-rsi-min','scr-rsi-max','scr-atr-max','scr-daily-min','scr-daily-max','scr-vol-min','scr-ma-pct'].forEach(function(id) {
+        ['scr-rsi-min','scr-rsi-max','scr-atr-max','scr-daily-min','scr-daily-max','scr-vol-min','scr-rel-vol','scr-ma-pct'].forEach(function(id) {
             var el = document.getElementById(id); if (el) el.value = '';
         });
         document.getElementById('scr-mcap').value = 'all';
@@ -738,18 +741,28 @@
         }
         function vc(v) { return v == null ? '' : v > 0 ? 'vs-pos' : v < 0 ? 'vs-neg' : ''; }
         var cols = [
-            { key:'name',           label:'Stock',   dir:1,  fmt:null },
-            { key:'close',          label:'Price',   dir:-1, fmt:function(s){ return fmtN(s.close,2); } },
-            { key:'change_pct',     label:'Chg%',    dir:-1, fmt:function(s){ return '<span class="'+vc(s.change_pct)+'">'+fmtN(s.change_pct,2,true,'%')+'</span>'; } },
-            { key:'volume',         label:'Vol',     dir:-1, fmt:function(s){ return fmtVol(s.volume); } },
-            { key:'RSI',            label:'RSI',     dir:1,  fmt:function(s){ return fmtN(s.RSI,1); } },
-            { key:'ATR_pct',        label:'ATR%',    dir:-1, fmt:function(s){ return fmtN(s.ATR_pct,2,false,'%'); } },
-            { key:'vs_EMA8',        label:'EMA8%',   dir:-1, fmt:function(s){ return '<span class="'+vc(s.vs_EMA8)+'">'+fmtN(s.vs_EMA8,2,true,'%')+'</span>'; } },
-            { key:'vs_EMA21',       label:'EMA21%',  dir:-1, fmt:function(s){ return '<span class="'+vc(s.vs_EMA21)+'">'+fmtN(s.vs_EMA21,2,true,'%')+'</span>'; } },
-            { key:'vs_SMA50',       label:'SMA50%',  dir:-1, fmt:function(s){ return '<span class="'+vc(s.vs_SMA50)+'">'+fmtN(s.vs_SMA50,2,true,'%')+'</span>'; } },
-            { key:'vs_SMA150',      label:'SMA150%', dir:-1, fmt:function(s){ return '<span class="'+vc(s.vs_SMA150)+'">'+fmtN(s.vs_SMA150,2,true,'%')+'</span>'; } },
-            { key:'vs_SMA200',      label:'SMA200%', dir:-1, fmt:function(s){ return '<span class="'+vc(s.vs_SMA200)+'">'+fmtN(s.vs_SMA200,2,true,'%')+'</span>'; } },
-            { key:'market_cap_basic',label:'MCap',   dir:-1, fmt:function(s){ return fmtMCap(s.market_cap_basic); } },
+            { key:'name',            label:'Stock',    dir:1,  fmt:null },
+            { key:'close',           label:'Price',    dir:-1, fmt:function(s){ return fmtN(s.close,2); } },
+            { key:'change_pct',      label:'Chg%',     dir:-1, fmt:function(s){ return '<span class="'+vc(s.change_pct)+'">'+fmtN(s.change_pct,2,true,'%')+'</span>'; } },
+            { key:'volume',          label:'Vol',      dir:-1, fmt:function(s){ return fmtVol(s.volume); } },
+            { key:'rel_vol',         label:'RVol',     dir:-1, fmt:function(s){ return s.rel_vol != null ? s.rel_vol.toFixed(2)+'x' : '-'; } },
+            { key:'RSI',             label:'RSI',      dir:1,  fmt:function(s){ return fmtN(s.RSI,1); } },
+            { key:'ATR_pct',         label:'ATR%',     dir:-1, fmt:function(s){ return fmtN(s.ATR_pct,2,false,'%'); } },
+            { key:'vs_52wk_high',    label:'52wkH%',   dir:-1, fmt:function(s){ return '<span class="'+vc(s.vs_52wk_high)+'">'+fmtN(s.vs_52wk_high,1,true,'%')+'</span>'; } },
+            { key:'perf_1m',         label:'1M%',      dir:-1, fmt:function(s){ return '<span class="'+vc(s.perf_1m)+'">'+fmtN(s.perf_1m,1,true,'%')+'</span>'; } },
+            { key:'perf_3m',         label:'3M%',      dir:-1, fmt:function(s){ return '<span class="'+vc(s.perf_3m)+'">'+fmtN(s.perf_3m,1,true,'%')+'</span>'; } },
+            { key:'perf_6m',         label:'6M%',      dir:-1, fmt:function(s){ return '<span class="'+vc(s.perf_6m)+'">'+fmtN(s.perf_6m,1,true,'%')+'</span>'; } },
+            { key:'perf_ytd',        label:'YTD%',     dir:-1, fmt:function(s){ return '<span class="'+vc(s.perf_ytd)+'">'+fmtN(s.perf_ytd,1,true,'%')+'</span>'; } },
+            { key:'perf_1y',         label:'1Y%',      dir:-1, fmt:function(s){ return '<span class="'+vc(s.perf_1y)+'">'+fmtN(s.perf_1y,1,true,'%')+'</span>'; } },
+            { key:'perf_3y',         label:'3Y%',      dir:-1, fmt:function(s){ return '<span class="'+vc(s.perf_3y)+'">'+fmtN(s.perf_3y,1,true,'%')+'</span>'; } },
+            { key:'perf_5y',         label:'5Y%',      dir:-1, fmt:function(s){ return '<span class="'+vc(s.perf_5y)+'">'+fmtN(s.perf_5y,1,true,'%')+'</span>'; } },
+            { key:'perf_10y',        label:'10Y%',     dir:-1, fmt:function(s){ return '<span class="'+vc(s.perf_10y)+'">'+fmtN(s.perf_10y,1,true,'%')+'</span>'; } },
+            { key:'vs_EMA8',         label:'EMA8%',    dir:-1, fmt:function(s){ return '<span class="'+vc(s.vs_EMA8)+'">'+fmtN(s.vs_EMA8,2,true,'%')+'</span>'; } },
+            { key:'vs_EMA21',        label:'EMA21%',   dir:-1, fmt:function(s){ return '<span class="'+vc(s.vs_EMA21)+'">'+fmtN(s.vs_EMA21,2,true,'%')+'</span>'; } },
+            { key:'vs_SMA50',        label:'SMA50%',   dir:-1, fmt:function(s){ return '<span class="'+vc(s.vs_SMA50)+'">'+fmtN(s.vs_SMA50,2,true,'%')+'</span>'; } },
+            { key:'vs_SMA150',       label:'SMA150%',  dir:-1, fmt:function(s){ return '<span class="'+vc(s.vs_SMA150)+'">'+fmtN(s.vs_SMA150,2,true,'%')+'</span>'; } },
+            { key:'vs_SMA200',       label:'SMA200%',  dir:-1, fmt:function(s){ return '<span class="'+vc(s.vs_SMA200)+'">'+fmtN(s.vs_SMA200,2,true,'%')+'</span>'; } },
+            { key:'market_cap_basic',label:'MCap',     dir:-1, fmt:function(s){ return fmtMCap(s.market_cap_basic); } },
         ];
         var html = '<table class="screener-table"><thead><tr>';
         cols.forEach(function(col) {
