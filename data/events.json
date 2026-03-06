@@ -1,11 +1,5 @@
 [
   {
-    "date": "05/03/2026",
-    "time": "13:30",
-    "event": "Initial Jobless Claims",
-    "country": "US"
-  },
-  {
     "date": "06/03/2026",
     "time": "13:30",
     "event": "Core Retail Sales (MoM)  (Jan)",
@@ -51,6 +45,42 @@
     "date": "12/03/2026",
     "time": "12:30",
     "event": "Initial Jobless Claims",
+    "country": "US"
+  },
+  {
+    "date": "13/03/2026",
+    "time": "07:00",
+    "event": "GDP (MoM)  (Jan)",
+    "country": "UK"
+  },
+  {
+    "date": "13/03/2026",
+    "time": "12:30",
+    "event": "Core PCE Price Index (MoM)  (Jan)",
+    "country": "US"
+  },
+  {
+    "date": "13/03/2026",
+    "time": "12:30",
+    "event": "Core PCE Price Index (YoY)  (Jan)",
+    "country": "US"
+  },
+  {
+    "date": "13/03/2026",
+    "time": "12:30",
+    "event": "Durable Goods Orders (MoM)  (Jan)",
+    "country": "US"
+  },
+  {
+    "date": "13/03/2026",
+    "time": "12:30",
+    "event": "GDP (QoQ)  (Q3)",
+    "country": "US"
+  },
+  {
+    "date": "13/03/2026",
+    "time": "14:00",
+    "event": "JOLTS Job Openings  (Jan)",
     "country": "US"
   }
 ]
