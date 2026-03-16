@@ -1,41 +1,5 @@
 [
   {
-    "date": "13/03/2026",
-    "time": "07:00",
-    "event": "GDP (MoM)  (Jan)",
-    "country": "UK"
-  },
-  {
-    "date": "13/03/2026",
-    "time": "12:30",
-    "event": "Core PCE Price Index (MoM)  (Jan)",
-    "country": "US"
-  },
-  {
-    "date": "13/03/2026",
-    "time": "12:30",
-    "event": "Core PCE Price Index (YoY)  (Jan)",
-    "country": "US"
-  },
-  {
-    "date": "13/03/2026",
-    "time": "12:30",
-    "event": "Durable Goods Orders (MoM)  (Jan)",
-    "country": "US"
-  },
-  {
-    "date": "13/03/2026",
-    "time": "12:30",
-    "event": "GDP (QoQ)  (Q4)",
-    "country": "US"
-  },
-  {
-    "date": "13/03/2026",
-    "time": "14:00",
-    "event": "JOLTS Job Openings  (Jan)",
-    "country": "US"
-  },
-  {
     "date": "18/03/2026",
     "time": "12:30",
     "event": "PPI (MoM)  (Feb)",
@@ -81,6 +45,12 @@
     "date": "19/03/2026",
     "time": "12:30",
     "event": "Philadelphia Fed Manufacturing Index  (Mar)",
+    "country": "US"
+  },
+  {
+    "date": "21/03/2026",
+    "time": "14:30",
+    "event": "Fed Chair Powell Speaks",
     "country": "US"
   }
 ]
