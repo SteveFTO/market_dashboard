@@ -10,5 +10,29 @@
     "time": "12:30",
     "event": "Initial Jobless Claims",
     "country": "US"
+  },
+  {
+    "date": "31/03/2026",
+    "time": "06:00",
+    "event": "GDP (QoQ)  (Q4)",
+    "country": "UK"
+  },
+  {
+    "date": "31/03/2026",
+    "time": "06:00",
+    "event": "GDP (YoY)  (Q4)",
+    "country": "UK"
+  },
+  {
+    "date": "31/03/2026",
+    "time": "14:00",
+    "event": "CB Consumer Confidence  (Mar)",
+    "country": "US"
+  },
+  {
+    "date": "31/03/2026",
+    "time": "14:00",
+    "event": "JOLTS Job Openings  (Feb)",
+    "country": "US"
   }
 ]
