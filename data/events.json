@@ -1,5 +1,35 @@
 [
   {
+    "date": "01/04/2026",
+    "time": "12:15",
+    "event": "ADP Nonfarm Employment Change  (Mar)",
+    "country": "US"
+  },
+  {
+    "date": "01/04/2026",
+    "time": "12:30",
+    "event": "Core Retail Sales (MoM)  (Feb)",
+    "country": "US"
+  },
+  {
+    "date": "01/04/2026",
+    "time": "12:30",
+    "event": "Retail Sales (MoM)  (Feb)",
+    "country": "US"
+  },
+  {
+    "date": "01/04/2026",
+    "time": "14:00",
+    "event": "ISM Manufacturing PMI  (Mar)",
+    "country": "US"
+  },
+  {
+    "date": "01/04/2026",
+    "time": "14:00",
+    "event": "ISM Manufacturing Prices  (Mar)",
+    "country": "US"
+  },
+  {
     "date": "25/03/2026",
     "time": "07:00",
     "event": "CPI (YoY)  (Feb)",
