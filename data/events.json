@@ -1,47 +1,5 @@
 [
   {
-    "date": "01/04/2026",
-    "time": "12:15",
-    "event": "ADP Nonfarm Employment Change  (Mar)",
-    "country": "US"
-  },
-  {
-    "date": "01/04/2026",
-    "time": "12:30",
-    "event": "Core Retail Sales (MoM)  (Feb)",
-    "country": "US"
-  },
-  {
-    "date": "01/04/2026",
-    "time": "12:30",
-    "event": "Retail Sales (MoM)  (Feb)",
-    "country": "US"
-  },
-  {
-    "date": "01/04/2026",
-    "time": "14:00",
-    "event": "ISM Manufacturing PMI  (Mar)",
-    "country": "US"
-  },
-  {
-    "date": "01/04/2026",
-    "time": "14:00",
-    "event": "ISM Manufacturing Prices  (Mar)",
-    "country": "US"
-  },
-  {
-    "date": "02/04/2026",
-    "time": "12:30",
-    "event": "Initial Jobless Claims",
-    "country": "US"
-  },
-  {
-    "date": "26/03/2026",
-    "time": "12:30",
-    "event": "Initial Jobless Claims",
-    "country": "US"
-  },
-  {
     "date": "31/03/2026",
     "time": "06:00",
     "event": "GDP (QoQ)  (Q4)",
@@ -52,17 +10,5 @@
     "time": "06:00",
     "event": "GDP (YoY)  (Q4)",
     "country": "UK"
-  },
-  {
-    "date": "31/03/2026",
-    "time": "14:00",
-    "event": "CB Consumer Confidence  (Mar)",
-    "country": "US"
-  },
-  {
-    "date": "31/03/2026",
-    "time": "14:00",
-    "event": "JOLTS Job Openings  (Feb)",
-    "country": "US"
   }
 ]
