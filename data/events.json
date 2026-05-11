@@ -1,73 +1,61 @@
 [
   {
-    "date": "08/05/2026",
-    "time": "12:30",
-    "event": "Nonfarm Payrolls  (Apr)",
-    "country": "US"
-  },
-  {
-    "date": "08/05/2026",
-    "time": "12:30",
-    "event": "Unemployment Rate  (Apr)",
-    "country": "US"
-  },
-  {
     "date": "12/05/2026",
-    "time": "12:30",
+    "time": "13:30",
     "event": "Core CPI (MoM)  (Apr)",
     "country": "US"
   },
   {
     "date": "12/05/2026",
-    "time": "12:30",
+    "time": "13:30",
     "event": "CPI (MoM)  (Apr)",
     "country": "US"
   },
   {
     "date": "12/05/2026",
-    "time": "12:30",
+    "time": "13:30",
     "event": "CPI (YoY)  (Apr)",
     "country": "US"
   },
   {
     "date": "13/05/2026",
-    "time": "12:30",
+    "time": "13:30",
     "event": "PPI (MoM)  (Apr)",
     "country": "US"
   },
   {
     "date": "14/05/2026",
-    "time": "06:00",
+    "time": "07:00",
     "event": "GDP (QoQ)  (Q1)",
     "country": "UK"
   },
   {
     "date": "14/05/2026",
-    "time": "06:00",
+    "time": "07:00",
     "event": "GDP (YoY)  (Q1)",
     "country": "UK"
   },
   {
     "date": "14/05/2026",
-    "time": "06:00",
+    "time": "07:00",
     "event": "GDP (MoM)  (Mar)",
     "country": "UK"
   },
   {
     "date": "14/05/2026",
-    "time": "12:30",
+    "time": "13:30",
     "event": "Core Retail Sales (MoM)  (Apr)",
     "country": "US"
   },
   {
     "date": "14/05/2026",
-    "time": "12:30",
+    "time": "13:30",
     "event": "Initial Jobless Claims",
     "country": "US"
   },
   {
     "date": "14/05/2026",
-    "time": "12:30",
+    "time": "13:30",
     "event": "Retail Sales (MoM)  (Apr)",
     "country": "US"
   }
