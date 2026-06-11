@@ -1,1 +1,74 @@
-[]
+[
+  {
+    "date": "11/06/2026",
+    "time": "13:30",
+    "event": "Initial Jobless Claims",
+    "country": "US"
+  },
+  {
+    "date": "11/06/2026",
+    "time": "13:30",
+    "event": "PPI (MoM)  (May)",
+    "country": "US"
+  },
+  {
+    "date": "12/06/2026",
+    "time": "06:00",
+    "event": "GDP (MoM)  (Apr)",
+    "country": "UK"
+  },
+  {
+    "date": "17/06/2026",
+    "time": "06:00",
+    "event": "CPI (YoY)  (May)",
+    "country": "UK"
+  },
+  {
+    "date": "17/06/2026",
+    "time": "13:30",
+    "event": "Core Retail Sales (MoM)  (May)",
+    "country": "US"
+  },
+  {
+    "date": "17/06/2026",
+    "time": "13:30",
+    "event": "Retail Sales (MoM)  (May)",
+    "country": "US"
+  },
+  {
+    "date": "17/06/2026",
+    "time": "19:00",
+    "event": "FOMC Statement",
+    "country": "US"
+  },
+  {
+    "date": "17/06/2026",
+    "time": "19:00",
+    "event": "Fed Interest Rate Decision",
+    "country": "US"
+  },
+  {
+    "date": "17/06/2026",
+    "time": "19:30",
+    "event": "FOMC Press Conference",
+    "country": "US"
+  },
+  {
+    "date": "18/06/2026",
+    "time": "11:00",
+    "event": "BoE Interest Rate Decision  (Jun)",
+    "country": "UK"
+  },
+  {
+    "date": "18/06/2026",
+    "time": "13:30",
+    "event": "Initial Jobless Claims",
+    "country": "US"
+  },
+  {
+    "date": "18/06/2026",
+    "time": "13:30",
+    "event": "Philadelphia Fed Manufacturing Index  (Jun)",
+    "country": "US"
+  }
+]
